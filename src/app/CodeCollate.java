@@ -1,5 +1,9 @@
 package app;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 public class CodeCollate {
 	private String[] _roots;
 	private String[] _extensions;
@@ -14,16 +18,14 @@ public class CodeCollate {
 	
 	private void parseInput(String[] args){
 		parseRoots(args);
-		parseExtensions(args[args.length]);
+		parseExtensions(args[args.length-1]);
 	}
 
 	private void parseExtensions(String extensionArg) {
-		//TODO
+		_extensions = extensionArg.split(",");
 	}
 
 	private void parseRoots(String[] args) {
-		//TODO
-		for (int i = 0; i< args.length-1; i++) { 
-		}
+		_roots = Arrays.copyOfRange(args, 0, args.length-1);
 	}
 }
