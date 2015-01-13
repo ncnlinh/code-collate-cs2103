@@ -15,10 +15,10 @@ import org.junit.Test;
 import app.CodeCollate;
 
 public class ParseTest {
-	private static final String PATH_VIEW = "/test/sample1/controller/View.cpp.in";
+	private static final String PATH_VIEW = "/test/sample1/controller/View.java.in";
 	private static final String PATH_CONTROLLER_B = "/test/sample1/controller/ControllerB.cpp.in";
 	private static final String PATH_CONTROLLER_A = "/test/sample1/controller/ControllerA.cpp.in";
-	private static final String EXTENSION = "in";
+	private static final String EXTENSION = "cpp.in, java.in";
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
 	}
@@ -40,10 +40,6 @@ public class ParseTest {
 			e.printStackTrace();
 		}
 		assertArrayEquals("Split args array", new String[]{PATH_CONTROLLER_A, PATH_CONTROLLER_B, PATH_VIEW}, roots);
-		assertArrayEquals("Split args array", new String[]{EXTENSION}, extensions);
-		
-		
-	
-	}
+		assertArrayEquals("Split args array", new String[]{"cpp.in","java.in"}, extensions);}
 
 }
