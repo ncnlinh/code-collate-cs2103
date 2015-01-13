@@ -22,7 +22,7 @@ public class CodeCollate {
 	}
 
 	private void parseExtensions(String extensionArg) {
-		_extensions = extensionArg.split(",");
+		_extensions = extensionArg.split(", ");
 	}
 
 	private void parseRoots(String[] args) {
