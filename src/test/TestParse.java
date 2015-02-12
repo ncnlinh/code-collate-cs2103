@@ -3,11 +3,12 @@ package test;
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertTrue;
 
-import java.io.File;
+import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
 import java.lang.reflect.Field;
-import java.nio.file.Path;
 
-import org.junit.BeforeClass;
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 
 import app.CodeCollate;
@@ -20,14 +21,25 @@ public class TestParse {
 	
 	private static String[] input;
 	private static CodeCollate collator;
-	@BeforeClass
-	public static void setUpBeforeClass() {
-		input = new String[] {PATH_CONTROLLER_A, PATH_CONTROLLER_B, PATH_VIEW, EXTENSION};	
-		collator = new CodeCollate(input);
+	private final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
+	private final ByteArrayOutputStream errContent = new ByteArrayOutputStream();
+
+	@Before
+	public void setUpStreams() {
+	    System.setOut(new PrintStream(outContent));
+	    System.setErr(new PrintStream(errContent));
 	}
 
+	@After
+	public void cleanUpStreams() {
+	    System.setOut(null);
+	    System.setErr(null);
+	}
+	
 	@Test
 	public void testParseInput() {
+		input = new String[] {PATH_CONTROLLER_A, PATH_CONTROLLER_B, PATH_VIEW, EXTENSION};	
+		collator = new CodeCollate(input);
 		String[] roots = {};
 		String[] extensions = {};
 		try {
@@ -44,7 +56,29 @@ public class TestParse {
 		assertArrayEquals("Split args array, parse and get extensions collection", new String[]{"cpp.in","java.in"}, extensions);
 	}
 	
+	@Test
+	public void testBadInputOnlyPath() {
+		input = new String[] {PATH_VIEW};	
+		collator = new CodeCollate(input);
+		assertTrue("Console warning message",
+				outContent.toString().contains("Missing arguments"));
+	}
 	
+	@Test
+	public void testBadInputOnlyExtension() {
+		input = new String[] {EXTENSION};	
+		collator = new CodeCollate(input);
+		assertTrue("Console warning message",
+				outContent.toString().contains("Missing arguments"));
+	}
+	
+	@Test
+	public void testBadInputNoArguments() {
+		input = new String[] {};	
+		collator = new CodeCollate(input);
+		assertTrue("Console warning message",
+				outContent.toString().contains("Missing arguments"));
+	}
 	
 	
 	
