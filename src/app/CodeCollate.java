@@ -12,14 +12,20 @@ public class CodeCollate {
 	private String[] _extensions;
 	
 	public static void main(String[] args) {
-		System.out.println("Hello world!");
+		CodeCollate collator = new CodeCollate(args);
+		collator.collateAll();
 	}
 	
+	private void collateAll() {
+		// TODO Auto-generated method stub
+		
+	}
+
 	public CodeCollate(String[] args){
 		 parseInput(args);
-		 initialiseEnvironment();
-		 openFiles();
+		 this.initialiseEnvironment();
 	}
+	
 	
 	private void initialiseEnvironment() {
 		if (!createOutputFolder()) {
@@ -49,8 +55,12 @@ public class CodeCollate {
 	}
 
 	private void parseInput(String[] args){
-		parseRoots(args);
-		parseExtensions(args[args.length-1]);
+		if (args.length >= 2) {
+			parseRoots(args);
+			parseExtensions(args[args.length-1]);
+		} else {
+			System.out.println("Missing arguments");
+		}
 	}
 
 	private void parseExtensions(String extensionArg) {
