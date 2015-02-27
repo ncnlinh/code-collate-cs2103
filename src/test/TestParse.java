@@ -14,10 +14,11 @@ import org.junit.Test;
 import app.CodeCollate;
 
 public class TestParse {
-	private static final String PATH_VIEW = "/test/sample1/controller/View.java.in";
-	private static final String PATH_CONTROLLER_B = "/test/sample1/controller/ControllerB.cpp.in";
-	private static final String PATH_CONTROLLER_A = "/test/sample1/controller/ControllerA.cpp.in";
+	private static final String PATH_VIEW = "./test/sample1/view/";
+	private static final String PATH_CONTROLLER_B = "./test/sample1/controller/ControllerB.cpp.in";
+	private static final String PATH_CONTROLLER_A = "./test/sample1/controller/ControllerA.cpp.in";
 	private static final String EXTENSION = "cpp.in, java.in";
+	private static final String PATH_UNKNOWN = "/a/b/c/d/e/f/g/";
 	
 	private static String[] input;
 	private static CodeCollate collator;
@@ -80,6 +81,21 @@ public class TestParse {
 				outContent.toString().contains("Missing arguments"));
 	}
 	
+	@Test
+	public void testBadInputMissingExtensions() {
+		input = new String[] {PATH_CONTROLLER_A, PATH_CONTROLLER_B};
+		collator = new CodeCollate(input);
+		assertTrue("Console warning message",
+				outContent.toString().contains("Arguments contain no extensions"));
+	}
+	
+	@Test
+	public void testBadInputInvalidRoot() {
+		input = new String[] {PATH_CONTROLLER_A, PATH_UNKNOWN, EXTENSION};
+		collator = new CodeCollate(input);
+		assertTrue("Console warning message",
+				outContent.toString().contains("Arguments contain invalid roots"));
+	}
 	
 	
 
