@@ -22,8 +22,11 @@ public class CodeCollate {
 	}
 
 	public CodeCollate(String[] args){
-		 parseInput(args);
-		 this.initialiseEnvironment();
+		 if (parseInput(args)){
+			 this.initialiseEnvironment();
+		 } else {
+			 System.out.println("Did not collate code");
+		 }
 	}
 	
 	
@@ -54,20 +57,45 @@ public class CodeCollate {
 		
 	}
 
-	private void parseInput(String[] args){
+	private boolean parseInput(String[] args){
 		if (args.length >= 2) {
-			parseRoots(args);
-			parseExtensions(args[args.length-1]);
+			if (!(parseRoots(args) && parseExtensions(args[args.length-1]))) {
+				return false;
+			}
+			return true;
 		} else {
 			System.out.println("Missing arguments");
+			return false;
 		}
 	}
 
-	private void parseExtensions(String extensionArg) {
-		_extensions = extensionArg.split(", ");
+	private boolean parseExtensions(String extensionArg) {
+		if (!isValidExtensionArgument(extensionArg)) {
+			System.out.println("Arguments contain no extensions");
+			return false;
+		} else {
+			_extensions = extensionArg.split(", ");
+			return true;
+		}
 	}
 
-	private void parseRoots(String[] args) {
+	private boolean isValidExtensionArgument(String extensionArg) {
+		if (extensionArg.contains("/")) {
+			return false;
+		}
+		return true;
+	}
+	private boolean parseRoots(String[] args) {
 		_roots = Arrays.copyOfRange(args, 0, args.length-1);
+		for (String root: _roots) {
+			File f = new File(root);
+		    if (!f.isDirectory())
+		    	f = f.getParentFile();
+		    if (!f.exists()){
+		    	System.out.println("Arguments contain invalid roots");
+				return false;
+		    }
+		}
+		return true;
 	}
 }
