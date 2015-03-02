@@ -22,6 +22,7 @@ public class TestCollate {
 	private static final String PATH_VIEW = "./test/sample1/view/";
 	private static final String PATH_CONTROLLER_B = "./test/sample1/controller/ControllerB.cpp";
 	private static final String PATH_CONTROLLER_A = "./test/sample1/controller/ControllerA.cpp";
+	private static final String PATH_CONTROLLER_DIR = "./test/sample1/controller";
 	private static final String FILE_PATH_VIEW = "./test/sample1/view/View.java";
 	private static final String FILE_PATH_CONTROLLER_B = "./test/sample1/controller/ControllerB.cpp";
 	private static final String FILE_PATH_CONTROLLER_A = "./test/sample1/controller/ControllerA.cpp";
@@ -73,6 +74,30 @@ public class TestCollate {
 		assertTrue("Correct files collection", Arrays.asList(files).contains(FILE_PATH_CONTROLLER_B));
 		assertTrue("Correct files collection", Arrays.asList(files).contains(FILE_PATH_CONTROLLER_A));
 	
+		input = new String[] {PATH_CONTROLLER_DIR, EXTENSION};	
+		collator = new CodeCollate(input);
+		try {
+			Method collateAllMethod = CodeCollate.class.getDeclaredMethod("collateAll");
+			collateAllMethod.setAccessible(true);
+			collateAllMethod.invoke(collator);
+		} catch (NoSuchMethodException | IllegalAccessException | IllegalArgumentException e) {
+			e.printStackTrace();
+		} catch (InvocationTargetException e) {
+			e.printStackTrace();
+		}
+		try {
+			Field filesField = CodeCollate.class.getDeclaredField("_files");
+			filesField.setAccessible(true);
+			List<?> list = (List<?>) filesField.get(collator);
+			files = list.toArray();
+		} catch (SecurityException | IllegalAccessException | IllegalArgumentException | NoSuchFieldException e) {
+			e.printStackTrace();
+		}
+		assertTrue("Correct files collection", files.length == 2);
+		assertTrue("Correct files collection", Arrays.asList(files).contains(FILE_PATH_CONTROLLER_B));
+		assertTrue("Correct files collection", Arrays.asList(files).contains(FILE_PATH_CONTROLLER_A));
+	
+		
 	}
 
 }
