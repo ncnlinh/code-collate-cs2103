@@ -15,9 +15,9 @@ import app.CodeCollate;
 
 public class TestParse {
 	private static final String PATH_VIEW = "./test/sample1/view/";
-	private static final String PATH_CONTROLLER_B = "./test/sample1/controller/ControllerB.cpp.in";
-	private static final String PATH_CONTROLLER_A = "./test/sample1/controller/ControllerA.cpp.in";
-	private static final String EXTENSION = "cpp.in, java.in";
+	private static final String PATH_CONTROLLER_B = "./test/sample1/controller/ControllerB.cpp";
+	private static final String PATH_CONTROLLER_A = "./test/sample1/controller/ControllerA.cpp";
+	private static final String EXTENSION = "cpp, java";
 	private static final String PATH_UNKNOWN = "/a/b/c/d/e/f/g/";
 	
 	private static String[] input;
@@ -54,7 +54,7 @@ public class TestParse {
 			e.printStackTrace();
 		}
 		assertArrayEquals("Split args array and get roots collection", new String[]{PATH_CONTROLLER_A, PATH_CONTROLLER_B, PATH_VIEW}, roots);
-		assertArrayEquals("Split args array, parse and get extensions collection", new String[]{"cpp.in","java.in"}, extensions);
+		assertArrayEquals("Split args array, parse and get extensions collection", new String[]{"cpp","java"}, extensions);
 	}
 	
 	@Test

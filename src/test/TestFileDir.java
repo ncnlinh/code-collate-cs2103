@@ -16,9 +16,9 @@ import app.CodeCollate;
 
 public class TestFileDir {
 	private static final String PATH_VIEW = "test/sample1/controller";
-	private static final String PATH_CONTROLLER_B = "test/sample1/controller/ControllerB.cpp.in";
-	private static final String PATH_CONTROLLER_A = "test/sample1/controller/ControllerA.cpp.in";
-	private static final String EXTENSION = "cpp.in, java.in";
+	private static final String PATH_CONTROLLER_B = "test/sample1/controller/ControllerB.cpp";
+	private static final String PATH_CONTROLLER_A = "test/sample1/controller/ControllerA.cpp";
+	private static final String EXTENSION = "cpp, java";
 	
 	private static String[] input;
 	private final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
