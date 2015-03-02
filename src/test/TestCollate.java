@@ -68,6 +68,7 @@ public class TestCollate {
 		} catch (SecurityException | IllegalAccessException | IllegalArgumentException | NoSuchFieldException e) {
 			e.printStackTrace();
 		}
+		assertTrue("Correct files collection", files.length == 3);
 		assertTrue("Correct files collection", Arrays.asList(files).contains(FILE_PATH_VIEW));
 		assertTrue("Correct files collection", Arrays.asList(files).contains(FILE_PATH_CONTROLLER_B));
 		assertTrue("Correct files collection", Arrays.asList(files).contains(FILE_PATH_CONTROLLER_A));

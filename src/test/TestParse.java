@@ -6,6 +6,7 @@ import static org.junit.Assert.assertTrue;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 import java.lang.reflect.Field;
+import java.util.Arrays;
 
 import org.junit.After;
 import org.junit.Before;
@@ -53,8 +54,19 @@ public class TestParse {
 		} catch (SecurityException | IllegalAccessException | IllegalArgumentException | NoSuchFieldException e) {
 			e.printStackTrace();
 		}
-		assertArrayEquals("Split args array and get roots collection", new String[]{PATH_CONTROLLER_A, PATH_CONTROLLER_B, PATH_VIEW}, roots);
-		assertArrayEquals("Split args array, parse and get extensions collection", new String[]{"cpp","java"}, extensions);
+		assertTrue("Split args array and get roots collection", roots.length == 3);
+		assertTrue("Split args array and get roots collection", 
+				Arrays.asList(roots).contains(PATH_VIEW));
+		assertTrue("Split args array and get roots collection", 
+				Arrays.asList(roots).contains(PATH_CONTROLLER_A));
+		assertTrue("Split args array and get roots collection", 
+				Arrays.asList(roots).contains(PATH_CONTROLLER_B));
+		assertTrue("Split args array, parse and get extensions collection",
+				extensions.length == 2);
+		assertTrue("Split args array, parse and get extensions collection", 
+				Arrays.asList(extensions).contains("cpp"));
+		assertTrue("Split args array, parse and get extensions collection", 
+				Arrays.asList(extensions).contains("java"));
 	}
 	
 	@Test
