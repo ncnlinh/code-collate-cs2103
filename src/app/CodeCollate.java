@@ -43,7 +43,7 @@ public class CodeCollate {
 					addFilesIn(rootPath + "/" + subPaths[i], extensions);
 				}
 			}
-		} else if (root.isFile()) {
+		} else {
 			String fileName = root.getName();
 			String fileExtension = fileName.substring(fileName.lastIndexOf('.')+1);
 			if (Arrays.asList(extensions).contains(fileExtension)) {
