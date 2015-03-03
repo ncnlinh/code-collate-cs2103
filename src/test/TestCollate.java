@@ -9,6 +9,7 @@ import java.io.PrintStream;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -48,7 +49,7 @@ public class TestCollate {
 	}
 	
 	@Test
-	public void testCodeFileRecorded() {
+	public void testCodeFilesAcknowledged() {
 		input = new String[] {PATH_CONTROLLER_A, PATH_CONTROLLER_B, PATH_VIEW, EXTENSION};	
 		collator = new CodeCollate(input);
 		Object[] files = {};
@@ -100,4 +101,15 @@ public class TestCollate {
 		
 	}
 
+	@Test
+	public void testCreateCollatedFiles() {
+		List<File> collatedFiles = new ArrayList<File>();
+		collatedFiles.add(new File("collated/" + SAMPLE_AUTHOR_1 +".col"));
+		collatedFiles.add(new File("collated/" + SAMPLE_AUTHOR_2 +".col"));
+		for (int i = 0; i < collatedFiles.size(); i++) {
+			File collatedFile = collatedFiles.get(i);
+			assertTrue("File #"+(i+1)+" exists", collatedFile.exists());
+			assertTrue("File #"+(i+1)+" is a file", collatedFile.isFile());
+		}
+	}
 }
