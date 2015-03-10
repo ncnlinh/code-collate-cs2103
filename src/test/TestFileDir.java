@@ -44,6 +44,7 @@ public class TestFileDir {
 	public void testNoFolderExists() {
 		File outputFolder = new File("collated");
 		if (outputFolder.exists()) {
+			purgeDirectory(outputFolder);
 			outputFolder.delete();
 		}
 		new CodeCollate(input);
@@ -56,6 +57,7 @@ public class TestFileDir {
 	public void testHaveFolderExists() {
 		File outputFolder = new File("collated");
 		if (outputFolder.exists()) {
+			purgeDirectory(outputFolder);
 			outputFolder.delete();
 		}
 		outputFolder.mkdir();
@@ -65,10 +67,18 @@ public class TestFileDir {
 		assertTrue("\"collated\" is a folder", outputFolder.isDirectory());
 	}
 	
+	void purgeDirectory(File dir) {
+	    for (File file: dir.listFiles()) {
+	        if (file.isDirectory()) purgeDirectory(file);
+	        file.delete();
+	    }
+	}
+	
 	@Test
 	public void testHaveFileOfSameNameExists() {
 		File outputFolder = new File("collated");
 		if (outputFolder.exists()) {
+			purgeDirectory(outputFolder);
 			outputFolder.delete();
 		}
 		try {
