@@ -44,7 +44,9 @@ public class TestFileDir {
 	public void testNoFolderExists() {
 		File outputFolder = new File("collated");
 		if (outputFolder.exists()) {
-			purgeDirectory(outputFolder);
+			if (outputFolder.isDirectory()) {
+				purgeDirectory(outputFolder);
+			}
 			outputFolder.delete();
 		}
 		new CodeCollate(input);
@@ -57,7 +59,9 @@ public class TestFileDir {
 	public void testHaveFolderExists() {
 		File outputFolder = new File("collated");
 		if (outputFolder.exists()) {
-			purgeDirectory(outputFolder);
+			if (outputFolder.isDirectory()) {	
+				purgeDirectory(outputFolder);
+			}
 			outputFolder.delete();
 		}
 		outputFolder.mkdir();
@@ -78,7 +82,9 @@ public class TestFileDir {
 	public void testHaveFileOfSameNameExists() {
 		File outputFolder = new File("collated");
 		if (outputFolder.exists()) {
-			purgeDirectory(outputFolder);
+			if (outputFolder.isDirectory()) {
+				purgeDirectory(outputFolder);
+			}
 			outputFolder.delete();
 		}
 		try {
