@@ -1,0 +1,84 @@
+1. ADD A TASK
+	- To add a task, enter command add in the bar.
+	- A task contains 5 main components: name, date, time, person and venue. 
+	- Date is formatted in ddmmyy (020914). Date also accepts the following inputs: today,
+	  tmr, tomorrow, Sunday, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday.
+	- Time must be in 24-hours format (e.g. 1000, 1900)
+	- TodoLog allows users to add:
+	a) Events
+		- ADD <task name> FROM <start date> AT <start time> TO <end date> AT <end time> 
+		- ADD <task name> FROM <start date> AT <start time> TO <end time> 
+			- example: add dinner with T11-3J from mon at 1900 to 2100
+	b) Deadline tasks
+		- ADD <task name> BY <end date> AT <end time> 
+			- example: add CS2103T lecture review submission by Tuesday at 2359 
+	c) Floating tasks
+		- ADD <task name> 
+			- example: add CS2103T review of CE1
+	d) Person
+		- Adding a person is optional.
+		- Use WITH <person> to add person
+			- example: add CS2103T meeting with Stanley
+	d) Venue
+		- Adding a venue is optional.
+		- Use IN <venue> or AT <venue> to add person
+			- example: add CS2103T meeting at NUS SoC
+		
+2. DELETE A TASK
+	- To delete one task: DELETE <index>
+		- example: delete 2
+	- To delete all tasks: DELETE ALL
+	- To delete all completed tasks: DELETE DONE
+
+3. MARK/UNMARK A TASK AS DONE
+	- To mark a task as done: DONE <index>
+	- To unmark a task as done: DONE <index>
+		- example: done 3
+	
+4. EDIT A TASK
+	- To edit a task, EDIT <index> <field name> <NEW INFO>
+		- example: edit 2 name Group meeting
+		- example: edit 2 end day Sunday
+		- example: edit 3 end time 2359
+		- example: edit 9 person Clare
+		- example: edit 4 start time 1100
+		- example: edit 3 venue SOC
+	
+
+4. SEARCH FOR A TASK
+	- To search for a task, SEARCH <keyword>
+	- The function is case insensitive.
+	- Keyword should any part of the name of the task.
+		- example: search meeting -> view all the tasks that have "meeting" included in their names
+	
+
+5. VIEW PARTICULAR TIME PERIODS
+	- To view a certain time period, VIEW <period>
+	- Valid period: today, tmr, any months (january, jan...), ddmmyy, this week, new week
+					overdue, all
+		- example: view tmr
+		- example: view 231114
+		- example: view this week
+		- example: view november
+		- example: view all
+		
+6. UNDO AN ACTION
+	- To undo an action, type UNDO.
+	
+7. REDO THE UNDO
+	- Simply type REDO to revert the wrong undo you did.
+	
+8. LOAD A STORAGE FILE
+	- To load a storage file (XML format) made by ToDoLog, LOAD <filename>
+		- example: load important.xml
+		
+9. SHORTCUTS
+	- Tab			To switch between to list. 
+					(The selected list will be highlighted in yellow)
+	- Page Up		The selected list will go to the previous page if available
+	- Page Down	The selected list will go to the next page if available
+	- Up Arrow		Retrieve the previous command input if available
+	- Down Arrow	Retrieve one command input after pressing 'Up Arrow'
+	- Alt + B		To minimize and maximize ToDoLog
+	- Alt + N		To make ToDoLog invisible
+	
