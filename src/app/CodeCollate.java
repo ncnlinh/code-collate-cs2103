@@ -14,6 +14,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class CodeCollate {
+	private static final int MAX_COMPONENTS_AUTHOR_COMMENT_LINE = 4;
 	private static final String MESSAGE_ERROR_IO = "Failed to read code file %s";
 	private static final String MESSAGE_INVALID_ROOTS = "Arguments contain invalid roots";
 	private static final String MESSAGE_NO_EXTENSIONS = "Arguments contain no extensions";
@@ -40,16 +41,30 @@ public class CodeCollate {
 		REGULAR,
 		BLANK
 	}
+	
+	/**
+	 * Main method of the tool.
+	 * @param args Arguments. First arguments are file paths, last argument is extension.
+	 */
 	public static void main(String[] args) {
+		log.setLevel(Level.OFF);
 		CodeCollate collator = new CodeCollate(args);
 		collator.collateAll();
 	}
 	
+	/**
+	 * Collate all code with the argument provided.
+	 */
 	private void collateAll() {
 		acknowledgeCodeFiles(_roots, _extensions);
 		collateFiles(_files);
 		
 	}
+	
+	/**
+	 * Recursively delete all files and subfolders inside a folder.
+	 * @param dir	the folder for the operation
+	 */
 	void purgeDirectory(File dir) {
 	    for (File file: dir.listFiles()) {
 	        if (file.isDirectory()) purgeDirectory(file);
@@ -57,6 +72,10 @@ public class CodeCollate {
 	    }
 	}
 	
+	/**
+	 * Do collate operation on files in the list provided 
+	 * @param files	list of files to collate
+	 */
 	private void collateFiles(List<String> files) {
 		for (String filePath: files){
 			try {	
@@ -67,6 +86,11 @@ public class CodeCollate {
 		}
 	}
 
+	/**
+	 * Read and collate code of the file in filePath 
+	 * @param filePath		path to the file for operation
+	 * @throws IOException	
+	 */
 	private void readCode(String filePath) throws IOException {
 		BufferedReader reader = null;
 		reader = new BufferedReader(new FileReader(filePath));
@@ -99,6 +123,12 @@ public class CodeCollate {
 		
 	}
 
+	/**
+	 * Insert start segment lines to collated file
+	 * @param author		author of the collated file to add in
+	 * @param filePath		file being collated
+	 * @throws IOException
+	 */
 	private void insertStartSegment(String author, String filePath) throws IOException {
 		File collatedFile = new File(PATH_COLLATED_FOLDER_RELATIVE + author + EXTENSION_COL);
 		if (!collatedFile.exists()) {
@@ -119,6 +149,12 @@ public class CodeCollate {
 		
 	}
 
+	/**
+	 * Insert start segment lines to collated file
+	 * @param author		author of the collated file to add in
+	 * @param filePath		file being collated
+	 * @throws IOException
+	 */
 	private void insertEndSegment(String author, String filePath) throws IOException {
 		File collatedFile = new File(PATH_COLLATED_FOLDER_RELATIVE+author+EXTENSION_COL);
 		String origin = new File(filePath).getCanonicalPath();
@@ -149,7 +185,9 @@ public class CodeCollate {
 			return CodeLineType.BLANK;
 		}
 		if (line.trim().startsWith(SYMBOL_DOUBLE_SLASH)) {
-			if (line.toLowerCase().contains(AUTHOR)) {
+			String[] commentLineComponents = line.toLowerCase().split(" ");
+			if (commentLineComponents.length < MAX_COMPONENTS_AUTHOR_COMMENT_LINE && 							// @ author name
+					commentLineComponents[commentLineComponents.length-2].contains(AUTHOR)) {
 				return CodeLineType.AUTHOR_COMMENT;
 			}
 			return CodeLineType.COMMENT;
